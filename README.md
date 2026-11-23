@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ## API Docummentation
 
 ## Tech Stack
@@ -651,9 +651,6 @@ free to use and modify.
 
 ## Author
 
-<<<<<<< HEAD
-
-# Created by Niyonkuru Samuel
 
 =======
 Created by Bergerac
@@ -764,7 +761,7 @@ For issues or questions, please open an issue in the repository.
 
 ## Remember to user your own username and password for your database
 
-> > > > > > > CaseManagement
+
 =======
 # Legal-case
->>>>>>> 6316ea73936e966db1eaf7d9bf1520564d9a55bc
+
