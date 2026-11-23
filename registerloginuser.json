@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Create Role",
+    "endpoint": "POST http://localhost:5000/roles/create",
+    "json or request body": {
+      "name": "Admin",
+      "description": "Administrator role",
+      "created_by": "system",
+      "response": {
+        "id": "uuid",
+        "name": "Admin",
+        "description": "Administrator role",
+        "created_by": "system",
+        "updated_by": null,
+        "created_at": "2025-04-10T10:30:00.000Z",
+        "updated_at": "2025-04-10T10:30:00.000Z"
+      }
+    }
+  },
+  {
+    "name": "Get Role",
+    "endpoint": "GET http://localhost:5000/roles/all",
+    "response": {
+      "roles": ["List of Active roles"]
+    }
+  },
+  {
+    "name": "Create User",
+    "endpoint": "POST http://localhost:5000/users/create",
+    "json or request body": {
+      "name": "Samuel Niyo",
+      "email": "user@example.com",
+      "phone": "0789123456",
+      "role_id": "acf56652-8087-4b1e-9887-06c0433705eb",
+      "response": {
+        "message": "User created and password sent on your email",
+        "password": "zA3$hB7!"
+      }
+    }
+  },
+  {
+    "name": "Login User",
+    "endpoint": "POST http://localhost:5000/auth/login",
+    "json or request body": {
+      "email": "user@example.com",
+      "password": "userPassword",
+
+      "response for user with default password": {
+        "message": "Your password is default. Please reset it before it expired.",
+        "userId": "user.id"
+      },
+      "response for user who was reset password": {
+        "message": "Enter 6 digits we sent to joh........@gmil.com"
+      }
+    }
+  },
+  {
+    "name": "Verify OTP",
+    "endpoint": "POST http://localhost:5000/auth/verify-otp",
+    "json or request body": {
+      "email": "user@example.com",
+      "otp": "123456",
+      "response": {
+        "access_token": "your-jwt-token",
+        "message": "OTP verified successfully"
+      }
+    }
+  },
+  {
+    "name": "Resend OTP",
+    "endpoint": "POST http://localhost:5000/auth/resend-otp",
+    "json or request body": {
+      "email": "user@example.com",
+      "response": {
+        "message": "OTP resent successfully"
+      }
+    }
+  },
+  {
+    "name": "Filter Active Users",
+    "endpoint": "GET http://localhost:5000/users/active",
+    "response": {
+      "users": ["List of Active Users"]
+    }
+  }
+]

@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  description   String?
+  created_by    String?
+  updated_by    String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  users         User[]   // A Role can have many users
+}
+
+model User {
+  id                   String     @id @default(uuid())
+  name                 String
+  email                String     @unique
+  phone                String     @unique
+  password_hash        String
+  is_active            Boolean    @default(true)
+  is_default_password  Boolean    @default(true)
+  password_expires_at  DateTime?
+  OTP_number           String?
+  OTP_life_time        DateTime?
+  last_login           DateTime?
+  role_id              String
+  role                 Role       @relation(fields: [role_id], references: [id])
+  created_by           String?
+  updated_by           String?
+  created_at           DateTime   @default(now())
+  updated_at           DateTime   @updatedAt
+  casesAsLawyer        Case[]     @relation("LawyerCases")
+}
+
+model Property {
+  id              String           @id @default(uuid())
+  name            String
+  price           Float
+  department      String
+  location        String
+  boughtTime      DateTime
+  manufacturer    String
+  status          Boolean          @default(true)
+  supplier        String
+  insuranceClaims InsuranceClaim[]
+}
+
+model InsuranceClaim {
+  id            String         @id @default(uuid())
+  type          ClentType
+  dateOfClaim   DateTime
+  description   String
+  claimAmount   Float
+  claimProgress ClaimProgress  @default(PENDING)
+  property_id   String?
+  property      Property?      @relation(fields: [property_id], references: [id])
+  clientClaims  ClientClaim[]
+  damageDetails DamageDetail[]
+  result        Result?        @relation("ClaimResult")
+}
+
+model Client {
+  id             String     @id @default(uuid())
+  names          String
+  poc            String     @unique
+  phoneNumber    String     @unique
+  address        String
+  clientClaims   ClientClaim[]
+  cases          Case[]
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now())
+}
+
+model ClientClaim {
+  id         String         @id @default(uuid())
+  client_id  String
+  client     Client         @relation(fields: [client_id], references: [id])
+  claim_id   String
+  claim      InsuranceClaim @relation(fields: [claim_id], references: [id])
+}
+
+model DamageDetail {
+  id              String         @id @default(uuid())
+  itemName        String
+  claim_id        String
+  insuranceClaim  InsuranceClaim @relation(fields: [claim_id], references: [id])
+}
+
+model Result {
+  id             String          @id @default(uuid()) 
+  decision       String
+  reason         String? 
+  amountApproved Float?            
+  reviewedAt     DateTime        @default(now())
+  claimId        String          @unique 
+  insuranceClaim InsuranceClaim  @relation("ClaimResult", fields: [claimId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt 
+}
+
+model Case {
+  id             String     @id @default(uuid())
+  classification String
+  type           String
+  status         CaseStatus @default(open)
+  client_id      String
+  lawyer_id      String
+  client         Client     @relation(fields: [client_id], references: [id])
+  lawyer         User       @relation("LawyerCases", fields: [lawyer_id], references: [id])
+  hearings       Hearing[]
+  documents      Document[]
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+
+  @@index([client_id])
+  @@index([lawyer_id])
+}
+
+model Hearing {
+  id          String     @id @default(uuid())
+  case_id     String
+  case        Case       @relation(fields: [case_id], references: [id])
+  start_time  DateTime
+  end_time    DateTime
+  location    String?
+  notes       String?
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+}
+
+model Document {
+  id             String     @id @default(uuid())
+  case_id        String
+  case           Case       @relation(fields: [case_id], references: [id])
+  filename       String
+  file_type      String
+  file_public_id String?    // For Cloudinary file management
+  uploaded_at    DateTime   @default(now())
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now())
+}
+
+enum ClentType {
+  Client
+  REG
+}
+
+enum ClaimProgress {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum CaseStatus {
+  open
+  closed
+  in_progress
+  on_hold
+}

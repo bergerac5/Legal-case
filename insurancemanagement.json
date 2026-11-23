@@ -1,0 +1,237 @@
+[
+  {
+    "name": "Create client claim",
+    "endpoint": "POST http://localhost:5000/claim/client",
+    "json or request body": {
+      "client": {
+        "names": "John Doe",
+        "poc": "ID1234",
+        "phoneNumber": "0788000000",
+        "address": "Kigali, Rwanda"
+      },
+      "type": "Fire",
+      "dateOfClaim": "2025-04-30T00:00:00.000Z",
+      "description": "The property was damaged by fire.",
+      "claimAmount": 5000,
+      "status": "Pending",
+      "damagedItems": [
+        { "itemName": "TV" },
+        { "itemName": "Fridge" },
+        { "itemName": "Sofa" }
+      ]
+    },
+    "response": {
+      "message": "Client claim successfully submitted.",
+      "client": {
+        "id": "57945112-b7b6-4181-9c05-0173b1bccb52",
+        "names": "John Doe",
+        "poc": "ID1234",
+        "phoneNumber": "0788000000",
+        "address": "Kigali, Rwanda"
+      },
+      "claimId": "238f2083-0cf4-4da9-8266-01eeda270994"
+    }
+  },
+  {
+    "name": "Get specific client claim",
+    "endpoint": "GET http://localhost:5000/claim/238f2083-0cf4-4da9-8266-01eeda270994",
+    "response": {
+      "claimId": "238f2083-0cf4-4da9-8266-01eeda270994",
+      "type": "Fire",
+      "dateOfClaim": "2025-04-30T00:00:00.000Z",
+      "description": "The property was damaged by fire.",
+      "claimAmount": 5000,
+      "status": "Pending",
+      "property": null,
+      "client": {
+        "id": "57945112-b7b6-4181-9c05-0173b1bccb52",
+        "names": "John Doe",
+        "poc": "ID1234",
+        "phoneNumber": "0788000000",
+        "address": "Kigali, Rwanda"
+      },
+      "damagedItems": [
+        {
+          "id": "3fe8d6a3-8a37-40cf-bee2-9523228d67fd",
+          "itemName": "Fridge",
+          "insuranceClaim_id": "238f2083-0cf4-4da9-8266-01eeda270994"
+        },
+        {
+          "id": "5375b12b-5a48-45de-986c-6f378d2b0810",
+          "itemName": "Sofa",
+          "insuranceClaim_id": "238f2083-0cf4-4da9-8266-01eeda270994"
+        },
+        {
+          "id": "ad38e453-ca82-4bab-9b94-f43198cef340",
+          "itemName": "TV",
+          "insuranceClaim_id": "238f2083-0cf4-4da9-8266-01eeda270994"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Get client claim",
+    "endpoint": "GET http://localhost:5000/claim/clientclaims",
+    "response": [
+      {
+        "claimId": "70f7da79-1944-43ca-9a92-242fe543cf02",
+        "type": "Client",
+        "dateOfClaim": "2025-05-04T10:00:00.000Z",
+        "description": "Fire damaged electronic equipment",
+        "claimAmount": 3000,
+        "claimProgress": "PENDING",
+        "damagedItems": [
+          {
+            "id": "76144769-fc7e-4be0-9d83-3caccdf2d289",
+            "itemName": "Radio",
+            "claim_id": "70f7da79-1944-43ca-9a92-242fe543cf02"
+          },
+          {
+            "id": "9af42c83-ac32-4f5a-96f2-e307fe2dff47",
+            "itemName": "TV",
+            "claim_id": "70f7da79-1944-43ca-9a92-242fe543cf02"
+          },
+          {
+            "id": "b9facdab-7338-42b3-96a4-7e868ab9a2cb",
+            "itemName": "Laptop",
+            "claim_id": "70f7da79-1944-43ca-9a92-242fe543cf02"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Register Property",
+    "endpoint": "Post http://localhost:5000/property/register",
+    "json or request body": {
+      "name": "Transformer",
+      "price": 250000,
+      "department": "IT Department",
+      "location": "Kigali HQ - Room 102",
+      "boughtTime": "2024-11-10T00:00:00Z",
+      "manufacturer": "HP",
+      "status": true,
+      "supplier": "Tech Solutions Ltd"
+    },
+    "response": {
+      "message": "Property Registered Successfully",
+      "data": {
+        "id": "82d475ca-b136-477b-aaaa-45f89c785259",
+        "name": "Transformer",
+        "price": 250000,
+        "department": "IT Department",
+        "location": "Kigali HQ - Room 102",
+        "boughtTime": "2024-11-10T00:00:00.000Z",
+        "manufacturer": "HP",
+        "status": true,
+        "supplier": "Tech Solutions Ltd"
+      }
+    }
+  },
+  {
+    "name": "Get All Property",
+    "endpoint": "Get http://localhost:5000/property/all",
+    "response": [
+      {
+        "id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+        "name": "Office Printer",
+        "price": 250000,
+        "department": "IT Department",
+        "location": "Kigali HQ - Room 102",
+        "boughtTime": "2024-11-10T00:00:00.000Z",
+        "manufacturer": "HP",
+        "status": true,
+        "supplier": "Tech Solutions Ltd"
+      }
+    ]
+  },
+  {
+    "name": "Get single Property",
+    "endpoint": "Get http://localhost:5000/property/6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+    "response": {
+      "id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+      "name": "Office Printer",
+      "price": 250000,
+      "department": "IT Department",
+      "location": "Kigali HQ - Room 102",
+      "boughtTime": "2024-11-10T00:00:00.000Z",
+      "manufacturer": "HP",
+      "status": true,
+      "supplier": "Tech Solutions Ltd"
+    }
+  },
+  {
+    "name": "Clim Insurance of  Property",
+    "endpoint": "Post http://localhost:5000/property/claim",
+    "json or request body": {
+      "type": "REG",
+      "claimProgress": "PENDING",
+      "dateOfClaim": "2025-05-05T10:00:00Z",
+      "property_id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+      "description": "Severe roof damage caused by a recent storm.",
+      "claimAmount": 2500
+    },
+    "response": {
+      "message": "Claim added successfully",
+      "data": {
+        "id": "cbb7cc0b-bee2-44f7-9550-89a73d060f3c",
+        "type": "REG",
+        "dateOfClaim": "2025-05-05T10:00:00.000Z",
+        "description": "Severe roof damage caused by a recent storm.",
+        "claimAmount": 2500,
+        "claimProgress": "PENDING",
+        "property_id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee"
+      }
+    }
+  },
+  {
+    "name": "Get All property Claim",
+    "endpoint": "Get http://localhost:5000/property/allclaim",
+    "response": [
+      {
+        "id": "cbb7cc0b-bee2-44f7-9550-89a73d060f3c",
+        "type": "REG",
+        "dateOfClaim": "2025-05-05T10:00:00.000Z",
+        "description": "Severe roof damage caused by a recent storm.",
+        "claimAmount": 2500,
+        "claimProgress": "PENDING",
+        "property_id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+        "property": {
+          "id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+          "name": "Office Printer",
+          "price": 250000,
+          "department": "IT Department",
+          "location": "Kigali HQ - Room 102",
+          "boughtTime": "2024-11-10T00:00:00.000Z",
+          "manufacturer": "HP",
+          "status": true,
+          "supplier": "Tech Solutions Ltd"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get single Property Claim",
+    "endpoint": "http://localhost:5000/property/single-claim/1bc9bcd0-3e29-41c2-be85-344a28785693",
+    "response": {
+      "id": "1bc9bcd0-3e29-41c2-be85-344a28785693",
+      "type": "REG",
+      "dateOfClaim": "2025-05-05T10:00:00.000Z",
+      "description": "Severe roof damage caused by a recent storm.",
+      "claimAmount": 2500,
+      "claimProgress": "PENDING",
+      "property_id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+      "property": {
+        "id": "6d4e0190-8944-4918-8c1b-0d9b08a2aaee",
+        "name": "Office Printer",
+        "price": 250000,
+        "department": "IT Department",
+        "location": "Kigali HQ - Room 102",
+        "boughtTime": "2024-11-10T00:00:00.000Z",
+        "manufacturer": "HP",
+        "status": true,
+        "supplier": "Tech Solutions Ltd"
+      }
+    }
+  }
+]

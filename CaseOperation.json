@@ -1,0 +1,171 @@
+{
+  "_comment": "API Test Suite for Legal Management System",
+  "version": "1.0",
+  "last_updated": "2023-11-15",
+  "tests": [
+    {
+      "_section": "Client Management",
+      "cases": [
+        {
+          "name": "Create Client",
+          "method": "POST",
+          "endpoint": "http://localhost:3001/clients",
+          "description": "Create a new client record",
+          "payload": {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "phone": "1234567890",
+            "address": "123 Main St, New York, NY"
+          },
+          "expected_status": 201
+        },
+        {
+          "name": "Retrieve All Clients",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/clients",
+          "description": "Get list of all clients",
+          "expected_status": 200
+        },
+        {
+          "name": "Update Client",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3001/clients/:id",
+          "description": "Update existing client details",
+          "payload": {
+            "name": "John Doe Updated",
+            "email": "john.doe.updated@example.com",
+            "phone": "9876543210",
+            "address": "456 Broadway, New York, NY"
+          },
+          "expected_status": 200
+        }
+      ]
+    },
+    {
+      "_section": "Case Management",
+      "cases": [
+        {
+          "name": "Create Case",
+          "method": "POST",
+          "endpoint": "http://localhost:3001/cases",
+          "description": "Create a new case record",
+          "payload": {
+            "classification": "Criminal",
+            "type": "Felony",
+            "client_id": "0fe4956a-58cd-4df2-b1ff-cf22a97c7485",
+            "lawyer_id": "b1c0228a-14b0-4e09-80af-ac4f00c6ea65"
+          },
+          "expected_status": 201
+        },
+        {
+          "name": "Get All Cases",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/cases",
+          "description": "Retrieve all cases",
+          "expected_status": 200
+        },
+        {
+          "name": "Get Case by ID",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/cases/:id",
+          "description": "Retrieve specific case details",
+          "expected_status": 200
+        },
+        {
+          "name": "Update Case",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3001/cases/:id",
+          "description": "Modify case details",
+          "payload": {
+            "classification": "Civil",
+            "type": "Contract Dispute",
+            "status": "in_progress"
+          },
+          "expected_status": 200
+        },
+        {
+          "name": "Update Case Status",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3001/cases/status/:id",
+          "description": "Change case status only",
+          "payload": {
+            "status": "on_hold"
+          },
+          "expected_status": 200
+        }
+      ]
+    },
+    {
+      "_section": "Document Management",
+      "cases": [
+        {
+          "name": "Upload Document",
+          "method": "POST",
+          "endpoint": "http://localhost:3001/documents",
+          "description": "Upload a document to a case",
+          "content_type": "multipart/form-data",
+          "form_fields": {
+            "case_id": "430bd44a-8e24-401c-92e5-c6ab39a3e436",
+            "filename": "Legal Notice",
+            "file_type": "application/pdf",
+            "file": "@path/to/IRAKARAMA.Bergera1.pdf"
+          }
+        },
+        {
+          "name": "search Document",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/documents/:id"
+        },
+        {
+          "name": "Get All Document",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/documents"
+        }
+      ]
+    },
+    {
+      "_section": "Hearing Management",
+      "cases": [
+        {
+          "name": "Create Hearing - Success",
+          "method": "POST",
+          "endpoint": "http://localhost:3001/hearings",
+          "description": "Create a new hearing for a case",
+          "json": {
+            "case_id": "0fe4956a-58cd-4df2-b1ff-cf22a97c7485",
+            "schedule": "2023-12-15T10:00:00Z",
+            "notes": "Initial hearing for criminal case"
+          }
+        },
+        {
+          "name": "Get All Hearings",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/hearings",
+          "description": "Retrieve all hearings"
+        },
+        {
+          "name": "Get Hearings by Case ID",
+          "method": "GET",
+          "endpoint": "http://localhost:3001/hearings/:id",
+          "description": "Retrieve hearings for specific case"
+        },
+        {
+          "name": "Update Hearing - Success",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3001/hearings/:id",
+          "description": "Update hearing details",
+          "json": {
+            "schedule": "2023-12-20T14:00:00Z",
+            "notes": "Rescheduled hearing"
+          }
+        }
+      ]
+    }
+  ],
+  "_notes": [
+    "Replace placeholder IDs with actual values when testing",
+    "For file uploads, use absolute paths or relative paths from test runner",
+    ":id in endpoints should be replaced with actual resource IDs",
+    "All endpoints expect JSON responses except file upload which uses form-data"
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "reset default password",
+    "endPoint": "POST http://localhost:3001/password/reset-password",
+    "json or request body": {
+      "email": "birakarama5@gmail.com",
+      "old_password": "Bergerac1*",
+      "new_password": "Bergerac1!",
+      "confirm_new_password": "Bergerac1!"
+    }
+  },
+  {
+    "name": "change password before expiration",
+    "endPoint": "PATCH http://localhost:3001/password/reset-password",
+    "json or request body": {
+      "email": "birakarama5@gmail.com",
+      "old_password": "Bergerac1!",
+      "new_password": "NewPassword456!",
+      "confirm_new_password": "NewPassword456!"
+    }
+  },
+  {
+    "name": "reset password",
+    "descrption": "in case password expired or user forget it and user to reset password should be Admin",
+    "endPoint": "POST http://localhost:3001/password/reset",
+    "json or request body": {
+      "email": "birakarama5@gmail.com"
+    }
+  }
+]
